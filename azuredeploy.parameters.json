@@ -51,7 +51,7 @@
             "value": "GEN-UNIQUE"
         },
         "sqlAdministratorLoginPassword": {
-            "value": "GEN-PASSWORD"
+            "value": "GEN-UNIQUE"
         }
     }
 }
