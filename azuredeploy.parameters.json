@@ -49,9 +49,6 @@
         },
         "sqlAdministratorLoginName": {
             "value": "GEN-UNIQUE"
-        },
-        "sqlAdministratorLoginPassword": {
-            "value": "GEN-PASSWORD"
         }
     }
 }
