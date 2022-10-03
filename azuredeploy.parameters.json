@@ -48,10 +48,10 @@
             ]
         },
         "sqlAdministratorLoginName": {
-            "value": "GEN-UNIQUE"
+            "value": "elijah"
         },
         "sqlAdministratorLoginPassword": {
-            "value": "GEN-PASSWORD"
+            "value": null
         }
     }
 }
