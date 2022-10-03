@@ -28,7 +28,7 @@ $vnetsURL = "https://github.com/mafiaboy1994/web-app-regional-vnet-pe-sql-storag
 
 
 $mainFileName = "azuredeploy.json" # File name used for downloading and uploading the main template.Add-PSSnapin
-$mainParamsFileName = ".\azuredeploy.parameters.json"
+$mainParamsFileName = "azuredeploy.parameters.json"
 $appSvcPlanFileName = "app_svc_plan.json"
 $appjsonFileName = "app.json"
 $dnsRecordFileName = "dns_record.json"
@@ -105,7 +105,7 @@ Set-AzStorageBlobContent `
 Set-AzStorageBlobContent `
 -Container $containerName `
 -File "$home/nestedtemplates/$appSvcPlanFileName " `
--Blob "nestedtemplates/${appSvcPlanFileName }" `
+-Blob "nestedtemplates/${appSvcPlanFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
@@ -176,7 +176,7 @@ Write-Host "Press [ENTER] to continue....."
 
 
 $mainTemplateUri = $context.BlobEndPoint + "$containerName/azuredeploy.json"
-$mainTemplateParamsUri = $contex.BlobEndPoint + "$containerName/azuredeploy.parameters.json"
+$mainTemplateParamsUri = $context.BlobEndPoint + "$containerName/azuredeploy.parameters.json"
 $sasToken = New-AzStorageContainerSASToken `
 -Context $context `
 -Container $containerName `
@@ -191,11 +191,8 @@ New-AzResourceGroupDeployment `
 -TemplateUri $mainTemplateUri `
 -TemplateParameterUri $mainTemplateParamsUri `
 -QueryString $newSas `
--environment $env `
--companyName $companyName `
--Location $location `
--projectName $projectName `
--Verbose 
+-Verbose `
+-DeploymentDebugLogLevel All
 
 
 
