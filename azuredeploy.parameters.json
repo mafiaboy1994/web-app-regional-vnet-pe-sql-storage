@@ -58,6 +58,9 @@
         },
         "companyName": {
             "value": "GEN-UNIQUE"
+        },
+        "projectName": {
+            "value": "GEN-UNIQUE"
         }
     }
 }

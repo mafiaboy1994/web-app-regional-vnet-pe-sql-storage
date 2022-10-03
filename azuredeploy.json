@@ -59,6 +59,12 @@
             "metadata": {
                 "description": "company name for deployment"
             }
+        },
+        "projectName": {
+            "type": "string",
+            "metadata": {
+                "description": "project name for deployment"
+            }
         }
     },
     "variables": {
