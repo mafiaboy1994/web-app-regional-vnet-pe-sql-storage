@@ -10,6 +10,18 @@ languages:
 ---
 # Web app private link with Azure SQL DB and storage
 
+![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/demos/web-app-regional-vnet-private-endpoint-sql-storage/PublicLastTestDate.svg)
+![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/demos/web-app-regional-vnet-private-endpoint-sql-storage/PublicDeployment.svg)
+
+![Azure US Gov Last Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/demos/web-app-regional-vnet-private-endpoint-sql-storage/FairfaxLastTestDate.svg)
+![Azure US Gov Last Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/demos/web-app-regional-vnet-private-endpoint-sql-storage/FairfaxDeployment.svg)
+
+![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/demos/web-app-regional-vnet-private-endpoint-sql-storage/BestPracticeResult.svg)
+![Cred Scan Check](https://azurequickstartsservice.blob.core.windows.net/badges/demos/web-app-regional-vnet-private-endpoint-sql-storage/CredScanResult.svg)
+
+[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fdemos%2Fweb-app-regional-vnet-private-endpoint-sql-storage%2Fazuredeploy.json)
+[![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fdemos%2Fweb-app-regional-vnet-private-endpoint-sql-storage%2Fazuredeploy.json)
+
 ### Overview
 
 This solution deploys a Windows Azure App Services web app into a subnet using regional virtual network integration. An Azure SQL DB and a storage account are also created, each with its own private link and private DNS resources to allow access from the web app over a private address space. Firewall rules are added to the storage account to prevent public access & the Azure SQL Server is configured to disallow public traffic. A dns record is created in each zone for the Azure SQL Server and storage account.
@@ -61,5 +73,3 @@ To validate that the web app can resolve the private endpoints for the Azure SQL
 ![Architecture diagram](./images/solution-architecture.png "Solution Architecture")
 
 `Tags: Microsoft.Resources/deployments, Microsoft.Web/serverfarms, Microsoft.Web/sites, config, networkConfig, Microsoft.Network/privateDnsZones/A, Microsoft.Network/privateDnsZones, Microsoft.Network/privateDnsZones/virtualNetworkLinks, Microsoft.Network/privateEndpoints, Microsoft.Sql/servers, databases, Microsoft.Storage/storageAccounts, blobServices/containers, Microsoft.Network/virtualNetworks/virtualNetworkPeerings, Microsoft.Network/virtualNetworks`
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmafiaboy1994%2Fweb-app-regional-vnet-pe-sql-storage%2Fmain%2Fazuredeploy.json)
