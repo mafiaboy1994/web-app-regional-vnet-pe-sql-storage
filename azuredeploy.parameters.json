@@ -55,6 +55,9 @@
         },
         "environment": {
             "value": "GEN-UNIQUE"
+        },
+        "companyName": {
+            "value": "GEN-UNIQUE"
         }
     }
 }

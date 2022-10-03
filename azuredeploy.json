@@ -53,6 +53,12 @@
             "metadata": {
                 "description": "environment for deployment"
             }
+        },
+        "companyName": {
+            "type": "string",
+            "metadata": {
+                "description": "company name for deployment"
+            }
         }
     },
     "variables": {
