@@ -47,6 +47,12 @@
             "metadata": {
                 "description": "JSON object describing virtual networks & subnets"
             }
+        },
+        "environment": {
+            "type": "string",
+            "metadata": {
+                "description": "environment for deployment"
+            }
         }
     },
     "variables": {

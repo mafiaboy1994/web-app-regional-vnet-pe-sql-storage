@@ -52,6 +52,9 @@
         },
         "sqlAdministratorLoginPassword": {
             "value": "GEN-PASSWORD"
+        },
+        "environment": {
+            "value": "GEN-UNIQUE"
         }
     }
 }
