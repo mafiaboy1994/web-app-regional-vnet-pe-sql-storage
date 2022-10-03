@@ -51,7 +51,7 @@
             "value": "elijah"
         },
         "sqlAdministratorLoginPassword": {
-            "value": "GEN-PASSWORD"
+            "value": null
         }
     }
 }
