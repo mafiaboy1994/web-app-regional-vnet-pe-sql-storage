@@ -46,6 +46,9 @@
                     ]
                 }
             ]
+        },
+        "sqlAdministratorLoginName": {
+            "value": "GEN-UNIQUE"
         }
     }
 }
