@@ -73,3 +73,5 @@ To validate that the web app can resolve the private endpoints for the Azure SQL
 ![Architecture diagram](./images/solution-architecture.png "Solution Architecture")
 
 `Tags: Microsoft.Resources/deployments, Microsoft.Web/serverfarms, Microsoft.Web/sites, config, networkConfig, Microsoft.Network/privateDnsZones/A, Microsoft.Network/privateDnsZones, Microsoft.Network/privateDnsZones/virtualNetworkLinks, Microsoft.Network/privateEndpoints, Microsoft.Sql/servers, databases, Microsoft.Storage/storageAccounts, blobServices/containers, Microsoft.Network/virtualNetworks/virtualNetworkPeerings, Microsoft.Network/virtualNetworks`
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/{https%3A%2F%2Fraw.githubusercontent.com%2Fmafiaboy1994%2Fweb-app-regional-vnet-pe-sql-storage%2Fmain%2Fazuredeploy.json})
