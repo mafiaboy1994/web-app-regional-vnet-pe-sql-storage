@@ -120,54 +120,54 @@ Set-AzStorageBlobContent `
 -Blob "nestedtemplates/${dnsRecordFileName}" `
 -Context $context -Force
 
-# DSC Templates Upload
+
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/DSC/$privateDnsFileName" `
--Blob "DSC/${privateDnsFileName}" `
+-File "$home/nestedtemplates/$privateDnsFileName" `
+-Blob "nestedtemplates/${privateDnsFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/DSC/$privateLinkIpConfigsHelperFileName" `
--Blob "DSC/${privateLinkIpConfigsHelperFileName}" `
+-File "$home/nestedtemplates/$privateLinkIpConfigsHelperFileName" `
+-Blob "nestedtemplates/${privateLinkIpConfigsHelperFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/DSC/$privateLinkIpConfigsFileName" `
--Blob "DSC/${privateLinkIpConfigsFileName}" `
+-File "$home/nestedtemplates/$privateLinkIpConfigsFileName" `
+-Blob "nestedtemplates/${privateLinkIpConfigsFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/DSC/$privateLinkFileName" `
--Blob "DSC/${privateLinkFileName}" `
+-File "$home/nestedtemplates/$privateLinkFileName" `
+-Blob "nestedtemplates/${privateLinkFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/DSC/$sqldbFileName" `
--Blob "DSC/${sqldbFileName}" `
+-File "$home/nestedtemplates/$sqldbFileName" `
+-Blob "nestedtemplates/${sqldbFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/DSC/$storageFileName" `
--Blob "DSC/${storageFileName}" `
+-File "$home/nestedtemplates/$storageFileName" `
+-Blob "nestedtemplates/${storageFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/params/$vnetPeeringFileName" `
--Blob "params/${vnetPeeringFileName}" `
+-File "$home/nestedtemplates/$vnetPeeringFileName" `
+-Blob "nestedtemplates/${vnetPeeringFileName}" `
 -Context $context -Force
 
 Set-AzStorageBlobContent `
 -Container $containerName `
--File "$home/params/$vnetsFileName" `
--Blob "params/${vnetsFileName}" `
+-File "$home/nestedtemplates/$vnetsFileName" `
+-Blob "nestedtemplates/${vnetsFileName}" `
 -Context $context -Force
 
 
