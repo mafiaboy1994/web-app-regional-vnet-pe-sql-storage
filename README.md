@@ -49,18 +49,3 @@ The following resources are deployed as part of this solution
                     ]
                 }
 
-### Scenario Deployment Validation
-
-To validate that the web app can resolve the private endpoints for the Azure SQL DB and storage account follow the steps below.
-- Navigate to the Azure web app and select the 'KUDU' blade and select 'Advanced Tools' then click the 'Go ->' hyperlink
-- A new web page will open displaying the web app's management environment
-- Select 'Debug console' then 'PowerShell' in the drop-down menu
-- In the PowerShell console, type the following commands to test that name resolution is working for both the Azure SQL DB and storage account. The private IP address for each resource should be returned.
-  - `PS D:\home> nameresolver <storage account name>.<storage account private DNS zone name>`
-  - `PS D:\home> nameresolver <Azure SQL DB name>.<Azure SQL DB private DNS zone name>`
-
-### Architecture Diagram
-
-![Architecture diagram](./images/solution-architecture.png "Solution Architecture")
-
-`Tags: Microsoft.Resources/deployments, Microsoft.Web/serverfarms, Microsoft.Web/sites, config, networkConfig, Microsoft.Network/privateDnsZones/A, Microsoft.Network/privateDnsZones, Microsoft.Network/privateDnsZones/virtualNetworkLinks, Microsoft.Network/privateEndpoints, Microsoft.Sql/servers, databases, Microsoft.Storage/storageAccounts, blobServices/containers, Microsoft.Network/virtualNetworks/virtualNetworkPeerings, Microsoft.Network/virtualNetworks`
