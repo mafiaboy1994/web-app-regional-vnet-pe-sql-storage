@@ -16,6 +16,9 @@ param groupType string
 @description('resource id of private link subnet')
 param subnet string
 
+@description('Tag val;ues to be applied to resources in this deployment')
+param tagValues object
+
 var prefix = guid(resourceType)
 var privateEndpointName_var = '${prefix}-pl-${suffix}'
 var privateEndpointConnectionName = '${prefix}-pep-cxn-${suffix}'
@@ -23,6 +26,7 @@ var privateEndpointConnectionName = '${prefix}-pep-cxn-${suffix}'
 resource privateEndpointName 'Microsoft.Network/privateEndpoints@2020-08-01' = {
   name: privateEndpointName_var
   location: location
+  tags: tagValues
   properties: {
     privateLinkServiceConnections: [
       {

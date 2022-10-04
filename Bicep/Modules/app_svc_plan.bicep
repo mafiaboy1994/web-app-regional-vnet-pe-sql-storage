@@ -10,6 +10,9 @@ param serverFarmSku object = {
   Name: 'S1'
 }
 
+@description('Tag val;ues to be applied to resources in this deployment')
+param tagValues object
+
 var serverFarmName_var = suffix
 
 resource serverFarmName 'Microsoft.Web/serverfarms@2019-08-01' = {
@@ -17,6 +20,7 @@ resource serverFarmName 'Microsoft.Web/serverfarms@2019-08-01' = {
   kind: 'app'
   name: toLower('plan-${serverFarmName_var}')
   location: location
+  tags: tagValues
 }
 
 output serverFarmName string = 'plan-${serverFarmName_var}'

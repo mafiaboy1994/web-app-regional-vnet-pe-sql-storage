@@ -13,6 +13,9 @@ param storageKind string = 'StorageV2'
 @description('storage account container name')
 param containerName string
 
+@description('Tag val;ues to be applied to resources in this deployment')
+param tagValues object
+
 @description('allor or deny internet access to storage account')
 @allowed([
   'Allow'
@@ -24,6 +27,7 @@ var storageAccountName_var = suffix
 
 resource storageAccountName 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   name: 'st${storageAccountName_var}'
+  tags: tagValues
   sku: {
     name: storageSku
   }

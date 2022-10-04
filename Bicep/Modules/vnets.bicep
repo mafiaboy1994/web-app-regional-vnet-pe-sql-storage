@@ -7,6 +7,9 @@ param location string
 @description('JSON input object defining Vnets and subnets. The first network in the array is assumed to be the hub netwkr and will be peered to all subsequent networks')
 param vNets object
 
+@description('Tag val;ues to be applied to resources in this deployment')
+param tagValues object
+
 var subnets = [for i in range(0, length(vNets.subnets)): {
   name: 'snet-${vNets.subnets[i].name}'
   properties: {
@@ -23,6 +26,7 @@ var subnets = [for i in range(0, length(vNets.subnets)): {
 resource vNets_name_suffix 'Microsoft.Network/virtualNetworks@2020-08-01' = {
   name: 'vnet-${vNets.name}-${suffix}'
   location: location
+  tags: tagValues
   properties: {
     addressSpace: {
       addressPrefixes: vNets.addressPrefixes

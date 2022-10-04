@@ -14,12 +14,16 @@ param ipAddressRestriction array = [
   }
 ]
 
+@description('Tag val;ues to be applied to resources in this deployment')
+param tagValues object
+
 @description('resource id of subnet to use for app service reginal vnet integration')
 param subnet string
 
 resource appName_resource 'Microsoft.Web/sites@2019-08-01' = {
   name: 'app-${toLower(appName)}'
   location: location
+  tags: tagValues
   properties: {
     //name: toLower(appName)
     serverFarmId: resourceId('Microsoft.Web/serverfarms', hostingPlanName)

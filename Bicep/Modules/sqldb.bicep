@@ -23,11 +23,15 @@ param databaseCollation string = 'SQL_Latin1_General_CP1_CI_AS'
 @description('Azure SQL database service objective type name')
 param databaseServiceObjectiveName string = 'Basic'
 
+@description('Tag val;ues to be applied to resources in this deployment')
+param tagValues object
+
 var sqlServerName_var = 'sql-server-${suffix}'
 
 resource sqlServerName 'Microsoft.Sql/servers@2020-02-02-preview' = {
   name: 'sql-${sqlServerName_var}'
   location: location
+  tags: tagValues
   properties: {
     administratorLogin: sqlAdministratorLogin
     administratorLoginPassword: sqlAdministratorLoginPassword
@@ -40,6 +44,7 @@ resource sqlServerName_databaseName 'Microsoft.Sql/servers/databases@2020-02-02-
   parent: sqlServerName
   name: 'sqldb-${databaseName}'
   location: location
+  tags: tagValues
   properties: {
     edition: databaseEdition
     collation: databaseCollation

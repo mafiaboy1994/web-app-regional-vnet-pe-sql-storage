@@ -15,7 +15,10 @@ param env string
 param companyName string
 
 @description('Products used for deployment')
-param products string
+param product string
+
+@description('current date for the deployment records. Do not overwrite')
+param currentDate string = utcNow('yyyy-dd-mm')
 
 @description('unique web app name')
 param webAppName string = uniqueString(subscription().id, resourceGroup().id)
@@ -38,6 +41,14 @@ var sqlDatabaseName = 'shop'
 var storageContainerName = 'mycontainer'
 var storageGroupType = 'blob'
 var sqlGroupType = 'sqlServer'
+var tagValues = {
+  createdBy: 'Elijah Wright'
+  company: companyName
+  DateCreated: currentDate
+  environment: env
+  product: product
+}
+
 //var vnetNestedTemplateUri = uri(_artifactsLocation, 'nestedtemplates/vnets.json${_artifactsLocationSasToken}')
 //var vnetPeeringNestedTemplateUri = uri(_artifactsLocation, 'nestedtemplates/vnet_peering.json${_artifactsLocationSasToken}')
 //var appServicePlanNestedTemplateUri = uri(_artifactsLocation, 'nestedtemplates/app_svc_plan.json${_artifactsLocationSasToken}')
@@ -56,6 +67,7 @@ module vnetModule 'Modules/vnets.bicep' = [for (network, i) in vNets: {
     suffix: suffix
     location: location
     vNets: network
+    
   }
 }]
 
