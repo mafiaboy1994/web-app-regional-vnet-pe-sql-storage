@@ -17,6 +17,9 @@ param companyName string
 @description('Products used for deployment')
 param product string
 
+@description('project name for deployment')
+param projectName string
+
 @description('current date for the deployment records. Do not overwrite')
 param currentDate string = utcNow('yyyy-dd-mm')
 
@@ -41,6 +44,8 @@ var sqlDatabaseName = 'shop'
 var storageContainerName = 'mycontainer'
 var storageGroupType = 'blob'
 var sqlGroupType = 'sqlServer'
+
+
 var tagValues = {
   createdBy: 'Elijah Wright'
   company: companyName
@@ -65,9 +70,12 @@ module vnetModule 'Modules/vnets.bicep' = [for (network, i) in vNets: {
   name: 'vnets-${i}'
   params: {
     suffix: suffix
+    env: env
     location: location
     vNets: network
-    
+    tagValues: tagValues
+    companyName: companyName
+
   }
 }]
 
@@ -84,7 +92,7 @@ module vnetPeeringsModule 'Modules/vnet_peering.bicep' = {
 }
 
 module appServicePlanModule 'Modules/app_svc_plan.bicep' = {
-  name: 'appServicePlan'
+  name: 'appServicePlans'
   params: {
     suffix: suffix
     location: location
@@ -92,6 +100,7 @@ module appServicePlanModule 'Modules/app_svc_plan.bicep' = {
       Tier: 'Standard'
       Name: 'S1'
     }
+    tagValues: tagValues
   }
   dependsOn: [
     vnetModule
@@ -99,7 +108,7 @@ module appServicePlanModule 'Modules/app_svc_plan.bicep' = {
 }
 
 module appServiceModule 'Modules/app.bicep'  = {
-  name: 'linkedTemplate-app'
+  name: 'app services'
   params: {
     location: location
     hostingPlanName: appServicePlanModule.outputs.serverFarmName
@@ -108,17 +117,19 @@ module appServiceModule 'Modules/app.bicep'  = {
     ipAddressRestriction: [
       '0.0.0.0/32'
     ]
+    tagValues: tagValues
   }
 }
 
 module sqlDBModule 'Modules/sqldb.bicep' /*TODO: replace with correct path to [variables('sqlNestedTemplateUri')]*/ = {
-  name: 'linkedTemplate-sqldb'
+  name: 'sqldbs'
   params: {
     suffix: suffix
     location: location
     sqlAdministratorLogin: sqlAdministratorLoginName
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
     databaseName: sqlDatabaseName
+    tagValues: tagValues
   }
   dependsOn: [
     vnetModule
@@ -126,7 +137,7 @@ module sqlDBModule 'Modules/sqldb.bicep' /*TODO: replace with correct path to [v
 }
 
 module privateLinkModule 'Modules/private_link.bicep'  /*TODO: replace with correct path to [variables('privateLinkNestedTemplateUri')]*/ = {
-  name: 'linkedTemplate-sqldb-private-link'
+  name: 'sqldb-private-link'
   params: {
     suffix: suffix
     location: location
@@ -134,16 +145,18 @@ module privateLinkModule 'Modules/private_link.bicep'  /*TODO: replace with corr
     resourceName: sqlDBModule.outputs.sqlServerName
     groupType: sqlGroupType
     subnet: vnetModule[0].outputs.subnetResourceIds[0].id
+    tagValues: tagValues
   }
 }
 
 module storageModule 'Modules/storage.bicep' /*TODO: replace with correct path to [variables('storageNestedTemplateUri')]*/ = {
-  name: 'linkedTemplate-storage'
+  name: 'storage-accounts'
   params: {
     suffix: suffix
     location: location
     containerName: storageContainerName
     defaultNetworkAccessAction: 'Deny'
+    tagValues: tagValues
   }
   dependsOn: [
     vnetModule
@@ -151,7 +164,7 @@ module storageModule 'Modules/storage.bicep' /*TODO: replace with correct path t
 }
 
 module StoragePrivateLinkModule 'Modules/private_link.bicep' /*TODO: replace with correct path to [variables('privateLinkNestedTemplateUri')]*/ = {
-  name: 'linkedTemplate-storage-private-link'
+  name: 'storage-private-link'
   params: {
     suffix: suffix
     location: location
@@ -159,14 +172,16 @@ module StoragePrivateLinkModule 'Modules/private_link.bicep' /*TODO: replace wit
     resourceName: storageModule.outputs.storageAccountName
     groupType: storageGroupType
     subnet: vnetModule[0].outputs.subnetResourceIds[0].id
+    tagValues: tagValues
   }
 }
 
 module storageDNSSpokeLinkModule 'Modules/private_dns.bicep' /*TODO: replace with correct path to [variables('privateDnsNestedTemplateUri')]*/ = {
-  name: 'linkedTemplate-storage-private-dns-spoke-link'
+  name: 'storage-private-dns-spoke-link'
   params: {
     privateDnsZoneName: storagePrivateDnsZoneName
     virtualNetworkName: vnetModule[1].outputs.virtualNetworkName
+    tagValues: tagValues
   }
   dependsOn: [
     StoragePrivateLinkModule
@@ -174,10 +189,11 @@ module storageDNSSpokeLinkModule 'Modules/private_dns.bicep' /*TODO: replace wit
 }
 
 module storageDNSHubLinkModule  'Modules/private_dns.bicep' = {
-  name: 'linkedTemplate-storage-private-dns-hub-link'
+  name: 'storage-private-dns-hub-link'
   params: {
     privateDnsZoneName: storagePrivateDnsZoneName
     virtualNetworkName: vnetModule[0].outputs.virtualNetworkName
+    tagValues: tagValues
   }
   dependsOn: [
     StoragePrivateLinkModule
@@ -205,6 +221,7 @@ module sqlDBPrivateDNSSpokeLinkModule 'Modules/private_dns.bicep' /*TODO: replac
   params: {
     privateDnsZoneName: sqlPrivateDnsZoneName
     virtualNetworkName: vnetModule[1].outputs.virtualNetworkName
+    tagValues: tagValues
   }
   dependsOn: [
     privateLinkModule
@@ -216,6 +233,7 @@ module sqlDBPrivateDNSHubLinkModule 'Modules/private_dns.bicep' /*TODO: replace 
   params: {
     privateDnsZoneName: sqlPrivateDnsZoneName
     virtualNetworkName: vnetModule[0].outputs.virtualNetworkName
+    tagValues: tagValues
   }
   dependsOn: [
     sqlDBModule
