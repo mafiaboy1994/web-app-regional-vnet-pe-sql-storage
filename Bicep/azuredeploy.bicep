@@ -270,5 +270,6 @@ module sqlDBPrivateLinkIpconfigsModule 'Modules/private_link_ipconfigs.bicep' /*
   }
   dependsOn: [
     sqlDBPrivateDNSHubLinkModule
+    storagePrivateLinkIpConfigsModule
   ]
 }

@@ -29,7 +29,7 @@ resource privateDnsZoneName_resource 'Microsoft.Network/privateDnsZones@2020-01-
 
 resource privateDnsZoneName_privateDnsZoneName_virtualNetworkName_link 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-01-01' = {
   parent: privateDnsZoneName_resource
-  name: 'pdnsz-link-${privateDnsZoneName}-vnet-${projectName}-${virtualNetworkName}-${companyName}-${env}-${location}'
+  name: 'pdnsz-link-${privateDnsZoneName}-vnet-${virtualNetworkName}'
   location: 'global'
   properties: {
     registrationEnabled: enableVmRegistration
