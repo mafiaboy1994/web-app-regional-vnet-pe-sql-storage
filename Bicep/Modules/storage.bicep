@@ -62,12 +62,12 @@ resource storageAccountName 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 }
 
 resource storageAccountName_default_containerName 'Microsoft.Storage/storageAccounts/blobServices/containers@2019-06-01' = {
-  name: 'st${storageAccountName_var}/default/${containerName}'
+  name: 'st${storageAccountName_var}${companyName}${env}${location}/default/${containerName}'
   dependsOn: [
     storageAccountName
   ]
 }
 
-output storageAccountName string = 'st${storageAccountName_var}'
+output storageAccountName string = 'st${storageAccountName_var}${companyName}${env}${location}'
 output storageContainerUri string = '${storageAccountName.properties.primaryEndpoints.blob}${containerName}'
 output containerName string = containerName

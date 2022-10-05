@@ -17,15 +17,8 @@ param subnet string
 @description('Tag val;ues to be applied to resources in this deployment')
 param tagValues object
 
-@description('environment for deployment')
-param env string
-
-@description('Company name for deployment')
-param companyName string
-
-
 var prefix = guid(resourceType)
-var privateEndpointName_var = 'pe-${prefix}--${companyName}-${env}-${location}'
+var privateEndpointName_var = 'pe-${prefix}-pl'
 var privateEndpointConnectionName = 'pep-cxn-${prefix}'
 
 resource privateEndpointName 'Microsoft.Network/privateEndpoints@2020-08-01' = {

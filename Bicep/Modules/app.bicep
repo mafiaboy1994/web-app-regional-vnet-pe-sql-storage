@@ -13,9 +13,6 @@ param companyName string
 @description('name of app service hosting plan')
 param hostingPlanName string
 
-@description('project name for deployment')
-param projectName string
-
 @description('ip address restrictions for web app')
 param ipAddressRestriction array = [
   {
@@ -52,7 +49,7 @@ resource appName_resource 'Microsoft.Web/sites@2019-08-01' = {
 }
 
 resource appName_web 'Microsoft.Web/sites/config@2019-08-01' = {
-  name: 'app-${toLower(appName)}/web'
+  name: 'app-${toLower(appName)}-${companyName}-${env}-${location}/web'
   properties: {
     ipSecurityRestrictions: ipAddressRestriction
   }
@@ -62,7 +59,7 @@ resource appName_web 'Microsoft.Web/sites/config@2019-08-01' = {
 }
 
 resource appName_virtualNetwork 'Microsoft.Web/sites/networkConfig@2019-08-01' = {
-  name: 'app-${toLower(appName)}/virtualNetwork'
+  name: 'app-${toLower(appName)}-${companyName}-${env}-${location}/virtualNetwork'
   location: location
   properties: {
     subnetResourceId: subnet
@@ -73,4 +70,4 @@ resource appName_virtualNetwork 'Microsoft.Web/sites/networkConfig@2019-08-01' =
   ]
 }
 
-output appName string = appName
+output appName string = 'app-${toLower(appName)}-${companyName}-${env}-${location}'

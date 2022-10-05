@@ -75,16 +75,18 @@ module vnetModule 'Modules/vnets.bicep' = [for (network, i) in vNets: {
     vNets: network
     tagValues: tagValues
     companyName: companyName
-
+    projectName:projectName
   }
 }]
 
 module vnetPeeringsModule 'Modules/vnet_peering.bicep' = {
   name: 'vnetPeerings'
   params: {
-    suffix: suffix
     location: location
     vNets: vNets
+    companyName:companyName
+    env:env
+    projectName:projectName
   }
   dependsOn: [
     vnetModule
@@ -108,7 +110,7 @@ module appServicePlanModule 'Modules/app_svc_plan.bicep' = {
 }
 
 module appServiceModule 'Modules/app.bicep'  = {
-  name: 'app services'
+  name: 'appServices'
   params: {
     location: location
     hostingPlanName: appServicePlanModule.outputs.serverFarmName
@@ -120,7 +122,6 @@ module appServiceModule 'Modules/app.bicep'  = {
     tagValues: tagValues
     companyName:companyName
     env:env
-    projectName:projectName
   }
 }
 
@@ -149,8 +150,6 @@ module privateLinkModule 'Modules/private_link.bicep'  /*TODO: replace with corr
     groupType: sqlGroupType
     subnet: vnetModule[0].outputs.subnetResourceIds[0].id
     tagValues: tagValues
-    companyName:companyName
-    env:env
   }
 }
 
@@ -178,8 +177,6 @@ module StoragePrivateLinkModule 'Modules/private_link.bicep' /*TODO: replace wit
     groupType: storageGroupType
     subnet: vnetModule[0].outputs.subnetResourceIds[0].id
     tagValues: tagValues
-    companyName:companyName
-    env:env
   }
 }
 
@@ -189,6 +186,10 @@ module storageDNSSpokeLinkModule 'Modules/private_dns.bicep' /*TODO: replace wit
     privateDnsZoneName: storagePrivateDnsZoneName
     virtualNetworkName: vnetModule[1].outputs.virtualNetworkName
     tagValues: tagValues
+    companyName:companyName
+    env:env
+    projectName:projectName
+    location:location
   }
   dependsOn: [
     StoragePrivateLinkModule
@@ -201,6 +202,10 @@ module storageDNSHubLinkModule  'Modules/private_dns.bicep' = {
     privateDnsZoneName: storagePrivateDnsZoneName
     virtualNetworkName: vnetModule[0].outputs.virtualNetworkName
     tagValues: tagValues
+    companyName:companyName
+    env:env
+    projectName:projectName
+    location:location
   }
   dependsOn: [
     StoragePrivateLinkModule
@@ -229,6 +234,10 @@ module sqlDBPrivateDNSSpokeLinkModule 'Modules/private_dns.bicep' /*TODO: replac
     privateDnsZoneName: sqlPrivateDnsZoneName
     virtualNetworkName: vnetModule[1].outputs.virtualNetworkName
     tagValues: tagValues
+    companyName:companyName
+    env:env
+    projectName:projectName
+    location:location
   }
   dependsOn: [
     privateLinkModule
@@ -241,6 +250,10 @@ module sqlDBPrivateDNSHubLinkModule 'Modules/private_dns.bicep' /*TODO: replace 
     privateDnsZoneName: sqlPrivateDnsZoneName
     virtualNetworkName: vnetModule[0].outputs.virtualNetworkName
     tagValues: tagValues
+    companyName:companyName
+    env:env
+    projectName:projectName
+    location:location
   }
   dependsOn: [
     sqlDBModule

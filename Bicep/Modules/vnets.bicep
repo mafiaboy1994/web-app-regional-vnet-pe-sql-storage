@@ -16,6 +16,8 @@ param tagValues object
 @description('Company name for deployment')
 param companyName string
 
+@description('project name for deployment')
+param projectName string
 
 var subnets = [for i in range(0, length(vNets.subnets)): {
   name: 'snet-${vNets.subnets[i].name}'
@@ -27,7 +29,7 @@ var subnets = [for i in range(0, length(vNets.subnets)): {
     routeTable: ((vNets.subnets[i].udrName == json('null')) ? json('null') : json('{"id": "${resourceId('Microsoft.Network/routeTables', '${vNets.subnets[i].udrName}-rt')}"}"}'))
     networkSecurityGroup: ((vNets.subnets[i].nsgName == json('null')) ? json('null') : json('{"id": "${resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-snet-${vNets.subnets[i].name}-${companyName}-${env}-${location}')}"}"}'))
   }
-  id: resourceId('Microsoft.Network/virtualNetworks/subnets/', 'vnet-${vNets.name}', 'snet-${vNets.subnets[i].name}')
+  id: resourceId('Microsoft.Network/virtualNetworks/subnets/', 'vnet-${projectName}-${vNets.name}-${companyName}-${env}-${location}', 'snet-${vNets.subnets[i].name}')
 }]
 
 var nsgSecurityRules = json(loadTextContent('../params/nsgRules.json')).securityRules
@@ -41,8 +43,11 @@ resource nsgResource 'Microsoft.Network/networkSecurityGroups@2022-01-01' = [for
 }]
 
 resource vNets_name_suffix 'Microsoft.Network/virtualNetworks@2020-08-01' = {
-  name: 'vnet-${vNets.name}'
+  name: 'vnet-${projectName}-${vNets.name}-${companyName}-${env}-${location}'
   location: location
+  dependsOn: [
+    nsgResource
+  ]
   tags: tagValues
   properties: {
     addressSpace: {
