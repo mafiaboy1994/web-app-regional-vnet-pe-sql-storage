@@ -1,3 +1,4 @@
+
 $projectName = Read-Host "Project Name?"
 $location = Read-Host "Location?"
 $env = Read-Host "Environment?"
@@ -18,4 +19,4 @@ New-AzResourceGroupDeployment `
 -companyName $companyName `
 -product $product `
 -Verbose `
--Name "shop-website-app-deployment"
+-Name "shop-website-app-sql-storage-pe-deployment"
