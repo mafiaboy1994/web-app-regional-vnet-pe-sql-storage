@@ -21,8 +21,10 @@ The following resources are deployed as part of this solution
 
 - Hub Virtual Network (10.1.0.0/16)
   - PrivateLinkSubnet (10.1.1.0/24)
+  - NSG
 - Spoke Virtual Network(10.2.0.0/16)
   - AppSvcSubnet (10.2.1.0/24)
+  - NSG
 - Virtual Network peering between hub and spoke virtual networks
 - Azure SQL Server
   - Azure SQL DB
