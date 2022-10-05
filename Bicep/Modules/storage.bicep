@@ -1,8 +1,14 @@
-@description('naming suffix based on resource group name hash')
-param suffix string
+
 
 @description('location to deploy the storage account')
 param location string
+
+@description('environment for deployment')
+param env string
+
+@description('Company name for deployment')
+param companyName string
+
 
 @description('storage account SKU')
 param storageSku string = 'Standard_LRS'
@@ -23,10 +29,11 @@ param tagValues object
 ])
 param defaultNetworkAccessAction string = 'Allow'
 
-var storageAccountName_var = suffix
+
+var storageAccountName_var = 'shop'
 
 resource storageAccountName 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: 'st${storageAccountName_var}'
+  name: 'st${storageAccountName_var}${companyName}${env}${location}'
   tags: tagValues
   sku: {
     name: storageSku

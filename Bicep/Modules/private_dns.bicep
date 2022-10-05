@@ -10,6 +10,8 @@ param enableVmRegistration bool = false
 @description('Tag val;ues to be applied to resources in this deployment')
 param tagValues object
 
+
+
 resource privateDnsZoneName_resource 'Microsoft.Network/privateDnsZones@2020-01-01' = {
   name: privateDnsZoneName
   location: 'global'

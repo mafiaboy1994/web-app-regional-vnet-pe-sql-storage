@@ -1,5 +1,3 @@
-@description('naming suffix based on resource group name hash')
-param suffix string
 
 @description('location to deploy private link endpoint web app')
 param location string
@@ -19,9 +17,16 @@ param subnet string
 @description('Tag val;ues to be applied to resources in this deployment')
 param tagValues object
 
+@description('environment for deployment')
+param env string
+
+@description('Company name for deployment')
+param companyName string
+
+
 var prefix = guid(resourceType)
-var privateEndpointName_var = '${prefix}-pl-${suffix}'
-var privateEndpointConnectionName = '${prefix}-pep-cxn-${suffix}'
+var privateEndpointName_var = 'pe-${prefix}--${companyName}-${env}-${location}'
+var privateEndpointConnectionName = 'pep-cxn-${prefix}'
 
 resource privateEndpointName 'Microsoft.Network/privateEndpoints@2020-08-01' = {
   name: privateEndpointName_var

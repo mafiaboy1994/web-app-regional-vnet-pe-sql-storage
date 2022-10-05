@@ -26,7 +26,10 @@ param databaseServiceObjectiveName string = 'Basic'
 @description('Tag val;ues to be applied to resources in this deployment')
 param tagValues object
 
-var sqlServerName_var = 'sql-server-${suffix}'
+@description('project name for deployment')
+param projectName string
+
+var sqlServerName_var = projectName
 
 resource sqlServerName 'Microsoft.Sql/servers@2020-02-02-preview' = {
   name: 'sql-${sqlServerName_var}'

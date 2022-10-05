@@ -1,5 +1,3 @@
-@description('naming suffix based on resource group name hash')
-param suffix string
 
 @description('location to deploy app service plan')
 param location string
@@ -13,14 +11,17 @@ param serverFarmSku object = {
 @description('Tag val;ues to be applied to resources in this deployment')
 param tagValues object
 
-var serverFarmName_var = suffix
+@description('project name for deployment')
+param projectName string
+
+//var serverFarmName_var = suffix
 
 resource serverFarmName 'Microsoft.Web/serverfarms@2019-08-01' = {
   sku: serverFarmSku
   kind: 'app'
-  name: toLower('plan-${serverFarmName_var}')
+  name: toLower('plan-${projectName}')
   location: location
   tags: tagValues
 }
 
-output serverFarmName string = 'plan-${serverFarmName_var}'
+output serverFarmName string = 'plan-${projectName}'

@@ -24,7 +24,8 @@ param projectName string
 param currentDate string = utcNow('yyyy-dd-mm')
 
 @description('unique web app name')
-param webAppName string = uniqueString(subscription().id, resourceGroup().id)
+param webAppName string = projectName
+//param webAppName string = uniqueString(subscription().id, resourceGroup().id)
 
 @description('Azure SQL DB administrator login name')
 param sqlAdministratorLoginName string
@@ -37,10 +38,10 @@ param sqlAdministratorLoginPassword string
 param vNets array
 
 var suffix = substring(replace(guid(resourceGroup().id), '-', ''), 0, 6)
-var appName = '${webAppName}-${suffix}'
+var appName = webAppName
 var storagePrivateDnsZoneName = 'privatelink.blob.${environment().suffixes.storage}'
 var sqlPrivateDnsZoneName = 'privatelink${environment().suffixes.sqlServerHostname}'
-var sqlDatabaseName = 'shop'
+var sqlDatabaseName = projectName
 var storageContainerName = 'mycontainer'
 var storageGroupType = 'blob'
 var sqlGroupType = 'sqlServer'
@@ -69,7 +70,6 @@ var tagValues = {
 module vnetModule 'Modules/vnets.bicep' = [for (network, i) in vNets: {
   name: 'vnets-${i}'
   params: {
-    suffix: suffix
     env: env
     location: location
     vNets: network
@@ -94,13 +94,13 @@ module vnetPeeringsModule 'Modules/vnet_peering.bicep' = {
 module appServicePlanModule 'Modules/app_svc_plan.bicep' = {
   name: 'appServicePlans'
   params: {
-    suffix: suffix
     location: location
     serverFarmSku: {
       Tier: 'Standard'
       Name: 'S1'
     }
     tagValues: tagValues
+    projectName: projectName
   }
   dependsOn: [
     vnetModule
@@ -118,6 +118,9 @@ module appServiceModule 'Modules/app.bicep'  = {
       '0.0.0.0/32'
     ]
     tagValues: tagValues
+    companyName:companyName
+    env:env
+    projectName:projectName
   }
 }
 
@@ -130,6 +133,7 @@ module sqlDBModule 'Modules/sqldb.bicep' /*TODO: replace with correct path to [v
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
     databaseName: sqlDatabaseName
     tagValues: tagValues
+    projectName:projectName
   }
   dependsOn: [
     vnetModule
@@ -139,24 +143,26 @@ module sqlDBModule 'Modules/sqldb.bicep' /*TODO: replace with correct path to [v
 module privateLinkModule 'Modules/private_link.bicep'  /*TODO: replace with correct path to [variables('privateLinkNestedTemplateUri')]*/ = {
   name: 'sqldb-private-link'
   params: {
-    suffix: suffix
     location: location
     resourceType: 'Microsoft.Sql/servers'
     resourceName: sqlDBModule.outputs.sqlServerName
     groupType: sqlGroupType
     subnet: vnetModule[0].outputs.subnetResourceIds[0].id
     tagValues: tagValues
+    companyName:companyName
+    env:env
   }
 }
 
 module storageModule 'Modules/storage.bicep' /*TODO: replace with correct path to [variables('storageNestedTemplateUri')]*/ = {
   name: 'storage-accounts'
   params: {
-    suffix: suffix
     location: location
     containerName: storageContainerName
     defaultNetworkAccessAction: 'Deny'
     tagValues: tagValues
+    companyName:companyName
+    env:env
   }
   dependsOn: [
     vnetModule
@@ -166,13 +172,14 @@ module storageModule 'Modules/storage.bicep' /*TODO: replace with correct path t
 module StoragePrivateLinkModule 'Modules/private_link.bicep' /*TODO: replace with correct path to [variables('privateLinkNestedTemplateUri')]*/ = {
   name: 'storage-private-link'
   params: {
-    suffix: suffix
     location: location
     resourceType: 'Microsoft.Storage/storageAccounts'
     resourceName: storageModule.outputs.storageAccountName
     groupType: storageGroupType
     subnet: vnetModule[0].outputs.subnetResourceIds[0].id
     tagValues: tagValues
+    companyName:companyName
+    env:env
   }
 }
 
