@@ -26,7 +26,7 @@ var subnets = [for i in range(0, length(vNets.subnets)): {
     privateEndpointNetworkPolicies: ((vNets.subnets[i].privateEndpointNetworkPolicies == json('null')) ? json('null') : vNets.subnets[i].privateEndpointNetworkPolicies)
     privateLinkServiceNetworkPolicies: ((vNets.subnets[i].privateLinkServiceNetworkPolicies == json('null')) ? json('null') : vNets.subnets[i].privateLinkServiceNetworkPolicies)
     routeTable: ((vNets.subnets[i].udrName == json('null')) ? json('null') : json('{"id": "${resourceId('Microsoft.Network/routeTables', '${vNets.subnets[i].udrName}-rt-${suffix}')}"}"}'))
-    networkSecurityGroup: ((vNets.subnets[i].nsgName == json('null')) ? json('null') : json('{"id": "${resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-snet-${vNets.subnets[i].nsgName}${suffix}')}"}"}'))
+    networkSecurityGroup: ((vNets.subnets[i].nsgName == json('null')) ? json('null') : json('{"id": "${resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-snet-${vNets.subnets[i].name}')}"}"}'))
   }
   id: resourceId('Microsoft.Network/virtualNetworks/subnets/', 'vnet-${vNets.name}-${suffix}', 'snet-${vNets.subnets[i].name}')
 }]

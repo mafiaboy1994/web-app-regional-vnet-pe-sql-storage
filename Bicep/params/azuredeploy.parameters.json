@@ -14,7 +14,7 @@
                             "name": "PrivateLink",
                             "addressPrefix": "10.1.1.0/24",
                             "udrName": null,
-                            "nsgName": null,
+                            "nsgName": "configured",
                             "delegations": null,
                             "privateEndpointNetworkPolicies": "Disabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
@@ -31,7 +31,7 @@
                             "name": "AppSvc",
                             "addressPrefix": "10.2.1.0/24",
                             "udrName": null,
-                            "nsgName": null,
+                            "nsgName": "configured",
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "delegations": [
