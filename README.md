@@ -1,13 +1,3 @@
----
-description: Deploys an Azure App Services web app with regional virtual network injection to allow the app to access an Azure SQL DB & storage account over a private endpoint
-page_type: sample
-products:
-- azure
-- azure-resource-manager
-urlFragment: web-app-regional-vnet-private-endpoint-sql-storage
-languages:
-- json
----
 # Web app private link with Azure SQL DB and storage
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmafiaboy1994%2Fweb-app-regional-vnet-pe-sql-storage%2Fmain%2Fazuredeploy.json) 
